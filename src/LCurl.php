@@ -3,7 +3,7 @@
 namespace Myaf\Net;
 
 use Exception;
-use Myaf\Log\LLog;
+use Myaf\Log\Log;
 use Myaf\Utils\URLUtil;
 use Myaf\Utils\FileUtil;
 
@@ -413,7 +413,7 @@ class LCurl
 
         //提供全局日志id支持.
         if ($this->globalLogId) {
-            $url = URLUtil::addParameter($url, [LLog::LOG_REQUEST_ID => LLog::getGlobalRequestId()]);
+            $url = URLUtil::addParameter($url, [Log::LOG_REQUEST_ID => Log::getGlobalRequestId()]);
         }
         //提供基础验证签名支持
         if ($this->basicAuthFlag) {
