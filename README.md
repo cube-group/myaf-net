@@ -1,4 +1,7 @@
 # Curl工具类库
+[![Latest Stable Version](https://poser.pugx.org/cube-group/myaf-net/version)](https://packagist.org/packages/cube-group/myaf-net)
+[![Total Downloads](https://poser.pugx.org/cube-group/myaf-net/downloads)](https://packagist.org/packages/cube-group/myaf-net)
+[![License](https://poser.pugx.org/cube-group/myaf-net/license)](https://packagist.org/packages/cube-group/myaf-net)
 ### 常用属性
 * 请求尝试的次数: $curl->try
 * 请求尝试的最大次数: $curl->tryMax
