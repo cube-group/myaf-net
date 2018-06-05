@@ -430,48 +430,47 @@ class LCurl
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_URL, $url);
 
+        switch ($this->postType) {
+            case self::POST_FORM_DATA:
+                if (!$data || !is_array($data)) {
+                    $data = [];
+                }
+                break;
+            case self::POST_FORM_URLENCODED:
+                if (!$data || !is_array($data)) {
+                    $data = [];
+                }
+                $data = http_build_query($data);
+                $header[] = 'Content-Type: application/x-www-form-urlencoded';
+                break;
+            case self::POST_JSON:
+                if (!$data) {
+                    $data = '';
+                } else if (is_array($data)) {
+                    $data = json_encode($data);
+                }
+                $header[] = 'Content-Type: application/json';
+                break;
+            case self::POST_XML:
+                $header[] = 'Content-Type: text/xml;charset=utf-8';
+                break;
+            case self::POST_RAW:
+                if (is_array($data)) $data = json_encode($data);
+                break;
+            case self::POST_AJAX:
+                if (is_array($data)) $data = json_encode($data);
+                $header[] = 'X-Requested-With: XMLHttpRequest';
+                $header[] = 'Accept:application/json, text/javascript';
+                $header[] = 'Accept-Language:zh-CN,zh;q=0.8,en;q=0.6';
+                $data = urlencode($data);
+                break;
+        }
+
+
         if ($type == 'get') {
-
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-
         } else if ($type == 'post') {
-
             curl_setopt($ch, CURLOPT_POST, true);
-            switch ($this->postType) {
-                case self::POST_FORM_DATA:
-                    if (!$data || !is_array($data)) {
-                        $data = [];
-                    }
-                    break;
-                case self::POST_FORM_URLENCODED:
-                    if (!$data || !is_array($data)) {
-                        $data = [];
-                    }
-                    $data = http_build_query($data);
-                    $header[] = 'Content-Type: application/x-www-form-urlencoded';
-                    break;
-                case self::POST_JSON:
-                    if (!$data) {
-                        $data = '';
-                    } else if (is_array($data)) {
-                        $data = json_encode($data);
-                    }
-                    $header[] = 'Content-Type: application/json';
-                    break;
-                case self::POST_XML:
-                    $header[] = 'Content-Type: text/xml;charset=utf-8';
-                    break;
-                case self::POST_RAW:
-                    if (is_array($data)) $data = json_encode($data);
-                    break;
-                case self::POST_AJAX:
-                    if (is_array($data)) $data = json_encode($data);
-                    $header[] = 'X-Requested-With: XMLHttpRequest';
-                    $header[] = 'Accept:application/json, text/javascript';
-                    $header[] = 'Accept-Language:zh-CN,zh;q=0.8,en;q=0.6';
-                    $data = urlencode($data);
-                    break;
-            }
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         } else if ($type == 'put') {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
