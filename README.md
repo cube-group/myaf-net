@@ -20,3 +20,8 @@ $curl = new LCurl(['tryMax'=>3]);
 $curl->post('http://google.com',['a'=>'1'],['X-Token'=>'test'],15);
 echo 'try: '.$curl->try;
 ```
+### 钉钉机器人
+```php
+$ding = new LDing('钉钉群报警机器人地址');
+$ding->send('发什么都可以');
+```
